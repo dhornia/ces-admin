@@ -14,4 +14,11 @@ public class User {
         this.password = password;
         this.country = country;
     }
+
+    public boolean login(String email, String password) {
+        if ((this.email.equals(email)) && (this.password.equals(password))){
+            return true;
+        };
+        return  false;
+    }
 }
