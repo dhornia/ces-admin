@@ -102,7 +102,7 @@ public class Main {
 
         User user = users.get(email);
 
-        if (user != null && user.login(email, password)) {
+        if (user != null && user.getPassword().equals(password)) {
             System.out.println("Login correcto");
         } else {
             System.out.println("Credenciales inválidas");

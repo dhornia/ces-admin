@@ -54,8 +54,4 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    public boolean login(String email, String password) {
-        return (this.email.equals(email)) && (this.password.equals(password));
-    }
 }
