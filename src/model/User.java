@@ -27,8 +27,8 @@ public class User {
         return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastName = lastname;
+    public void setLastname(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -56,9 +56,6 @@ public class User {
     }
 
     public boolean login(String email, String password) {
-        if ((this.email.equals(email)) && (this.password.equals(password))){
-            return true;
-        };
-        return  false;
+        return (this.email.equals(email)) && (this.password.equals(password));
     }
 }
