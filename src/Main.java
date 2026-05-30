@@ -57,13 +57,13 @@ public class Main {
         System.out.print("Apellido: ");
         String lastName = scanner.nextLine();
 
-        System.out.print("Email: ");
+        System.out.print("Correo: ");
         String email = scanner.nextLine();
 
-        System.out.print("Password: ");
+        System.out.print("Contraseña: ");
         String password = scanner.nextLine();
 
-        System.out.print("Country: ");
+        System.out.print("País: ");
         String country = scanner.nextLine();
 
         if (name.isBlank() || lastName.isBlank() || email.isBlank()
