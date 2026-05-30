@@ -2,38 +2,104 @@ import model.User;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
         Map<String, User> users = new HashMap<>();
 
-        User user = new User(
-                "Darlen",
-                "Hornia",
-                "darlen@gmail.com",
-                "1234",
-                "Cuba"
-        );
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println(
-                user.login("darlen@gmail.com", "1234")
-        );
+        int option = 0;
 
-        System.out.println(register(user, users));
+        while (option != 3) {
 
-        System.out.println(register(user, users));
+            System.out.println("\n*** MENU ***");
+            System.out.println("1 - Registrar usuario");
+            System.out.println("2 - Login");
+            System.out.println("3 - Salir");
+            System.out.print("Seleccione una opción: ");
 
-        System.out.println(users);
-    }
+            option = scanner.nextInt();
 
-    public static boolean register(User user, Map<String, User> users) {
+            switch (option) {
 
-        if (users.containsKey(user.getEmail())) {
-            return false;
+                case 1:
+                    registerUser(scanner, users);
+                    break;
+
+                case 2:
+                    loginUser(scanner, users);
+                    break;
+
+                case 3:
+                    System.out.println("Hasta luego!");
+                    break;
+
+                default:
+                    System.out.println("Seleccione una opción válida");
+            }
         }
 
-        users.put(user.getEmail(), user);
-        return true;
+        scanner.close();
+    }
+
+    public static void registerUser(
+            Scanner scanner,
+            Map<String, User> users) {
+
+        scanner.nextLine();
+
+        System.out.print("Nombre: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Apellido: ");
+        String lastName = scanner.nextLine();
+
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Country: ");
+        String country = scanner.nextLine();
+
+        User user = new User(
+                name,
+                lastName,
+                email,
+                password,
+                country
+        );
+
+        if (users.containsKey(user.getEmail())) {
+            System.out.println("El correo ya existe");
+        } else {
+            users.put(user.getEmail(), user);
+            System.out.println("Usuario registrado");
+        }
+    }
+
+    public static void loginUser(
+            Scanner scanner,
+            Map<String, User> users) {
+
+        scanner.nextLine();
+
+        System.out.print("Correo: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Contraseña: ");
+        String password = scanner.nextLine();
+
+        User user = users.get(email);
+
+        if (user != null && user.login(email, password)) {
+            System.out.println("Login correcto");
+        } else {
+            System.out.println("Credenciales inválidas");
+        }
     }
 }
