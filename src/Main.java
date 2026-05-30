@@ -11,9 +11,9 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        int option = 0;
+        String option = "0";
 
-        while (option != 3) {
+        while (!option.equals("3")) {
 
             System.out.println("\n*** MENU ***");
             System.out.println("1 - Registrar usuario");
@@ -21,24 +21,24 @@ public class Main {
             System.out.println("3 - Salir");
             System.out.print("Seleccione una opción: ");
 
-            option = scanner.nextInt();
+            option = scanner.next();
 
             switch (option) {
 
-                case 1:
+                case "1":
                     registerUser(scanner, users);
                     break;
 
-                case 2:
+                case "2":
                     loginUser(scanner, users);
                     break;
 
-                case 3:
+                case "3":
                     System.out.println("Hasta luego!");
                     break;
 
                 default:
-                    System.out.println("Seleccione una opción válida");
+                    System.out.println("Opción no válida");
             }
         }
 
