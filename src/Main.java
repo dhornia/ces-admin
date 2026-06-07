@@ -50,6 +50,12 @@ public class Main {
                     System.out.print("País: ");
                     String country = scanner.nextLine();
 
+                    if (name.isBlank() || lastName.isBlank() || email.isBlank()
+                            || password.isBlank() || country.isBlank()) {
+                        System.out.println("Todos los campos son obligatorios");
+                        return;
+                    }
+
                     User user = new User(
                             name,
                             lastName,
