@@ -23,7 +23,7 @@ public class User {
         this.name = name;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return lastName;
     }
 

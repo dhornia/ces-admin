@@ -39,7 +39,7 @@ public class UserSystem {
             System.out.println(
                     i + " - " +
                             user.getName() + " " +
-                            user.getLastname() + " - " +
+                            user.getLastName() + " - " +
                             user.getEmail() + " - " +
                             user.getCountry()
             );
