@@ -10,6 +10,7 @@ public class UserSystem {
 
     public UserSystem() {
         this.users = new HashMap<>();
+        loadTestUsers();
     }
 
     public boolean registerUser(User user) {
@@ -28,11 +29,23 @@ public class UserSystem {
                 user.getPassword().equals(password);
     }
 
+    public void getAllUsers() {
+        for (User user : users.values()) {
+            System.out.println(user);
+        }
+    }
+
     private boolean userExists(String email) {
         return users.containsKey(email);
     }
 
     private User findUserByEmail(String email) {
         return users.get(email);
+    }
+
+    private void loadTestUsers() {
+        users.put("admin@test.com", new User("Fiorella", "Lopez", "admin@test.com", "1234", "UY"));
+        users.put("user1@test.com", new User("Juan", "Furtado", "user1@test.com", "1234", "UY"));
+        users.put("user2@test.com", new User("Viviana", "Caprani", "user2@test.com", "1234", "CU"));
     }
 }
