@@ -15,17 +15,26 @@ public class Main {
     private static void showMenu(Scanner scanner, UserSystem userSystem) {
         String option = "0";
 
-        while (!option.equals("3")) {
-            System.out.println("\n*** MENU ***");
+        while (!option.equals("4")) {
+            System.out.println();
+            System.out.println("=====================");
+            System.out.println("     Sistema Usuario     ");
+            System.out.println("=====================");
+
             System.out.println("1 - Registrar usuario");
             System.out.println("2 - Login");
-            System.out.println("3 - Salir");
+            System.out.println("3 - Listar usuarios");
+            System.out.println("4 - Salir");
+
+            System.out.println("---------------------");
             System.out.print("Seleccione una opción: ");
 
             option = scanner.nextLine();
 
             switch (option) {
                 case "1":
+                    System.out.println("\nRegistro de usuario ...");
+
                     System.out.print("Nombre: ");
                     String name = scanner.nextLine();
 
@@ -58,6 +67,8 @@ public class Main {
                     break;
 
                 case "2":
+                    System.out.println("\nLogin ...");
+
                     System.out.print("Correo: ");
                     String loginEmail = scanner.nextLine();
 
@@ -73,6 +84,14 @@ public class Main {
                     break;
 
                 case "3":
+                    System.out.println("\nLista de Usuarios ...");
+
+                    userSystem.getAllUsers();
+                    break;
+
+                case "4":
+                    System.out.println("\nSaliendo ...");
+
                     System.out.println("Hasta luego!");
                     break;
 

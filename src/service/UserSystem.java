@@ -30,8 +30,20 @@ public class UserSystem {
     }
 
     public void getAllUsers() {
+        System.out.println("# - Nombre - Correo - País de nacimiento");
+        System.out.println("--------------------------------------");
+
+        int i = 1;
+
         for (User user : users.values()) {
-            System.out.println(user);
+            System.out.println(
+                    i + " - " +
+                            user.getName() + " " +
+                            user.getLastname() + " - " +
+                            user.getEmail() + " - " +
+                            user.getCountry()
+            );
+            i++;
         }
     }
 
