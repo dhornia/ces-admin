@@ -15,4 +15,9 @@ public class Tester extends User {
     public void setLevel(String level) {
         this.level = level;
     }
+
+    @Override
+    public String getRole() {
+        return getLevel();
+    }
 }

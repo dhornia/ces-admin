@@ -1,6 +1,6 @@
 package model;
 
-public class User {
+public abstract class User {
     private String name;
     private String lastName;
     private String email;
@@ -54,4 +54,6 @@ public class User {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public abstract String getRole();
 }
