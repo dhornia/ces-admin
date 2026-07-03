@@ -1,3 +1,4 @@
+import exception.EmailAlreadyExistsException;
 import exception.UserNotFoundException;
 import model.User;
 import service.UserSystem;
@@ -114,35 +115,41 @@ public class Main {
     }
 
     public static void registerAdmin() {
-        System.out.println("\nCrear Cuenta Administrador ...");
+        try {
+            System.out.println("\nCrear Cuenta Administrador ...");
 
-        System.out.print("Nombre: ");
-        String adminName = scanner.nextLine();
+            System.out.print("Nombre: ");
+            String adminName = scanner.nextLine();
 
-        System.out.print("Apellido: ");
-        String adminLastName = scanner.nextLine();
+            System.out.print("Apellido: ");
+            String adminLastName = scanner.nextLine();
 
-        System.out.print("Correo: ");
-        String adminEmail = scanner.nextLine();
+            System.out.print("Correo: ");
+            String adminEmail = scanner.nextLine();
 
-        System.out.print("Contraseña: ");
-        String adminPassword = scanner.nextLine();
+            System.out.print("Contraseña: ");
+            String adminPassword = scanner.nextLine();
 
-        System.out.print("País: ");
-        String adminCountry = scanner.nextLine();
+            System.out.print("País: ");
+            String adminCountry = scanner.nextLine();
 
-        if (adminName.isBlank() || adminLastName.isBlank() || adminEmail.isBlank()
-                || adminPassword.isBlank() || adminCountry.isBlank()) {
-            System.out.println("Todos los campos son obligatorios");
-            return;
-        }
+            if (adminName.isBlank() || adminLastName.isBlank() || adminEmail.isBlank()
+                    || adminPassword.isBlank() || adminCountry.isBlank()) {
+                System.out.println("Todos los campos son obligatorios");
+                return;
+            }
 
-        boolean newUser = userSystem.addUser(adminName, adminLastName, adminEmail, adminPassword, adminCountry);
+            userSystem.addUser(
+                    adminName,
+                    adminLastName,
+                    adminEmail,
+                    adminPassword,
+                    adminCountry
+            );
+            System.out.println("Usuario creado con éxito");
 
-        if (newUser) {
-            System.out.println("Usuario registrado.");
-        } else {
-            System.out.println("Ya existe un usuario registrado con este correo.");
+        } catch (EmailAlreadyExistsException e) {
+            System.out.println(e.getMessage());
         }
     }
 

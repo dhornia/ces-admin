@@ -1,5 +1,6 @@
 package service;
 
+import exception.EmailAlreadyExistsException;
 import exception.UserNotFoundException;
 import model.Admin;
 import model.Tester;
@@ -26,7 +27,7 @@ public class UserSystem {
         return null;
     }
 
-    public boolean addUser(String name, String lastName, String email, String password, String country) {
+    public boolean addUser(String name, String lastName, String email, String password, String country) throws EmailAlreadyExistsException {
         if (name == null || name.isBlank()
                 || lastName == null || lastName.isBlank()
                 || email == null || email.isBlank()
@@ -35,8 +36,8 @@ public class UserSystem {
             return false;
         }
 
-        if (userExists(email)) {
-            return false;
+        if (users.containsKey(email)) {
+            throw new EmailAlreadyExistsException("Ya existe un usuario registrado con este correo.");
         }
 
         User user = new Admin(name, lastName, email, password, country);
@@ -55,8 +56,10 @@ public class UserSystem {
         } else throw new UserNotFoundException("Usuario no encontrado");
     }
 
-    private boolean userExists(String email) {
-        return users.containsKey(email);
+    public void userExists(String email) throws EmailAlreadyExistsException {
+        if (users.containsKey(email)) {
+            throw new EmailAlreadyExistsException("Ya existe un usuario registrado con este correo.");
+        }
     }
 
     public void seed() {
