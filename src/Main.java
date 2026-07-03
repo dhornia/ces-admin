@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Main {
     private static Scanner scanner;
     private static User currentUser;
-    private static  UserSystem userSystem;
+    private static UserSystem userSystem;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
@@ -47,7 +47,6 @@ public class Main {
         String option = scanner.nextLine();
 
         switch (option) {
-
             case "1":
                 login();
                 break;
@@ -100,16 +99,10 @@ public class Main {
     public static void login() {
         try {
             System.out.println("\nIniciar Sesión Administrador ...");
+            String email = read(("Email: "));
+            String password = read("Contraseña: ");
 
-            System.out.print("Email: ");
-            String email = scanner.nextLine();
-
-            System.out.print("Contraseña: ");
-            String password = scanner.nextLine();
-
-            User user = userSystem.login(email, password);
-
-            currentUser = user;
+            currentUser = userSystem.login(email, password);
             System.out.println("Login exitoso");
 
         } catch (InvalidCredentialsException e) {
@@ -120,21 +113,11 @@ public class Main {
     public static void registerAdmin() {
         try {
             System.out.println("\nCrear Cuenta Administrador ...");
-
-            System.out.print("Nombre: ");
-            String adminName = scanner.nextLine();
-
-            System.out.print("Apellido: ");
-            String adminLastName = scanner.nextLine();
-
-            System.out.print("Correo: ");
-            String adminEmail = scanner.nextLine();
-
-            System.out.print("Contraseña: ");
-            String adminPassword = scanner.nextLine();
-
-            System.out.print("País: ");
-            String adminCountry = scanner.nextLine();
+            String adminName = read("Nombre: ");
+            String adminLastName =read("Apellido: ");
+            String adminEmail =read("Correo: ");
+            String adminPassword =read("Contraseña: ");
+            String adminCountry =read("País: ");
 
             userSystem.addUser(
                     adminName,
@@ -154,8 +137,7 @@ public class Main {
     }
 
     public static void findUser() {
-        System.out.print("Email: ");
-        String searchEmail = scanner.nextLine();
+        String searchEmail = read("Email: ");
 
         try {
             User user = userSystem.findUserByEmail(searchEmail);
@@ -178,7 +160,6 @@ public class Main {
     }
 
     public static void listUsers() {
-
         System.out.println("+----+----------------------+--------------------------+----------------+---------+");
         System.out.printf("| %-2s | %-20s | %-24s | %-14s | %-7s |\n",
                 "#", "Nombre", "Email", "País", "Perfil");
@@ -204,5 +185,10 @@ public class Main {
 
     public static void logout() {
         currentUser = null;
+    }
+
+    private static String read(String message) {
+        System.out.print(message);
+        return scanner.nextLine().trim();
     }
 }
