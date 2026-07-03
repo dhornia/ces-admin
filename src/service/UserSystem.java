@@ -39,7 +39,11 @@ public class UserSystem {
             throw new InvalidDataException("Todos los campos son obligatorios.");
         }
 
-        userExists(email);
+        if (password.length() < 8) {
+            throw new InvalidDataException("La contraseña debe tener al menos 8 caracteres.");
+        }
+
+        verifyEmailDoesNotExist(email);
 
         User user = new Admin(name, lastName, email, password, country);
         users.put(email, user);
@@ -56,7 +60,7 @@ public class UserSystem {
         } else throw new UserNotFoundException("Usuario no encontrado");
     }
 
-    public void userExists(String email) throws EmailAlreadyExistsException {
+    public void verifyEmailDoesNotExist(String email) throws EmailAlreadyExistsException {
         if (users.containsKey(email)) {
             throw new EmailAlreadyExistsException("Ya existe un usuario registrado con este correo");
         }
