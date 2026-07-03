@@ -2,6 +2,7 @@ package service;
 
 import exception.EmailAlreadyExistsException;
 import exception.InvalidCredentialsException;
+import exception.InvalidDataException;
 import exception.UserNotFoundException;
 import model.Admin;
 import model.Tester;
@@ -28,20 +29,20 @@ public class UserSystem {
         throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
-    public boolean addUser(String name, String lastName, String email, String password, String country) throws EmailAlreadyExistsException {
+    public void addUser(String name, String lastName, String email, String password, String country) throws EmailAlreadyExistsException, InvalidDataException {
         if (name == null || name.isBlank()
                 || lastName == null || lastName.isBlank()
                 || email == null || email.isBlank()
                 || password == null || password.isBlank()
                 || country == null || country.isBlank()) {
-            return false;
+
+            throw new InvalidDataException("Todos los campos son obligatorios.");
         }
 
         userExists(email);
 
         User user = new Admin(name, lastName, email, password, country);
         users.put(email, user);
-        return true;
     }
 
     public Collection<User> getAllUsers() {

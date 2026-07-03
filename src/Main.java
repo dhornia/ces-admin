@@ -1,5 +1,6 @@
 import exception.EmailAlreadyExistsException;
 import exception.InvalidCredentialsException;
+import exception.InvalidDataException;
 import exception.UserNotFoundException;
 import model.User;
 import service.UserSystem;
@@ -135,12 +136,6 @@ public class Main {
             System.out.print("País: ");
             String adminCountry = scanner.nextLine();
 
-            if (adminName.isBlank() || adminLastName.isBlank() || adminEmail.isBlank()
-                    || adminPassword.isBlank() || adminCountry.isBlank()) {
-                System.out.println("Todos los campos son obligatorios");
-                return;
-            }
-
             userSystem.addUser(
                     adminName,
                     adminLastName,
@@ -151,7 +146,10 @@ public class Main {
             System.out.println("Usuario creado con éxito");
 
         } catch (EmailAlreadyExistsException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Email en uso." + e.getMessage());
+
+        } catch (InvalidDataException e) {
+            System.out.println("Datos inválidos. " + e.getMessage());
         }
     }
 
