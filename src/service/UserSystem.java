@@ -9,35 +9,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserSystem {
-
     private Map<String, User> users;
-    private User currentUser;
 
     public UserSystem() {
         this.users = new HashMap<>();
-        loadTestUsersData();
     }
 
     public User login(String email, String password) {
         User user = users.get(email);
 
         if (user != null && user.getPassword().equals(password)) {
-            currentUser = user;
             return user;
         }
 
         return null;
     }
 
-    public void logout() {
-        currentUser = null;
-    }
+    public boolean addUser(String name, String lastName, String email, String password, String country) {
+        if (name == null || name.isBlank()
+                || lastName == null || lastName.isBlank()
+                || email == null || email.isBlank()
+                || password == null || password.isBlank()
+                || country == null || country.isBlank()) {
+            return false;
+        }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public boolean registerUser(String name, String lastName, String email, String password, String country) {
         if (userExists(email)) {
             return false;
         }
@@ -59,7 +55,7 @@ public class UserSystem {
         return users.containsKey(email);
     }
 
-    private void loadTestUsersData() {
+    public void seed() {
         users.put("admin@test.com",
                 new Admin("Fiorella", "Lopez", "admin@test.com", "1234", "UY"));
 

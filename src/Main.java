@@ -4,17 +4,20 @@ import service.UserSystem;
 import java.util.Scanner;
 
 public class Main {
+    private static Scanner scanner;
+    private static User currentUser;
+    private static  UserSystem userSystem;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        UserSystem userSystem = new UserSystem();
+        scanner = new Scanner(System.in);
+        userSystem = new UserSystem();
+        userSystem.seed();
 
-        showMenu(scanner, userSystem);
+        showMenu();
         scanner.close();
     }
 
-    private static void showMenu(Scanner scanner, UserSystem userSystem) {
-
+    public static void showMenu() {
         String option = "0";
 
         while (!option.equals("4")) {
@@ -23,16 +26,15 @@ public class Main {
             System.out.println("     Admin CES");
             System.out.println("=====================");
 
-            if (userSystem.getCurrentUser() == null) {
-                option = showPublicMenu(scanner, userSystem);
+            if (currentUser == null) {
+                option = showPublicMenu();
             } else {
-                option = showAdminMenu(scanner, userSystem);
+                option = showAdminMenu();
             }
         }
     }
 
-    private static String showPublicMenu(Scanner scanner, UserSystem userSystem) {
-
+    public static String showPublicMenu() {
         System.out.println("1 - Iniciar Sesión");
         System.out.println("2 - Registrarse");
         System.out.println("3 - Salir");
@@ -43,11 +45,11 @@ public class Main {
         switch (option) {
 
             case "1":
-                login(scanner, userSystem);
+                login();
                 break;
 
             case "2":
-                registerAdmin(scanner, userSystem);
+                registerAdmin();
                 break;
 
             case "3":
@@ -62,9 +64,8 @@ public class Main {
         return option;
     }
 
-    private static String showAdminMenu(Scanner scanner, UserSystem userSystem) {
-
-        System.out.println("\n*** Bienvenido " + userSystem.getCurrentUser().getName() + " " + userSystem.getCurrentUser().getLastName() + " ***");
+    public static String showAdminMenu() {
+        System.out.println("\n*** Bienvenido " + currentUser.getFullName() + " ***");
         System.out.println("--- MENU ---");
 
         System.out.println("1 - Buscar usuario");
@@ -76,15 +77,15 @@ public class Main {
 
         switch (option) {
             case "1":
-                findUser(scanner, userSystem);
+                findUser();
                 break;
 
             case "2":
-                listUsers(userSystem);
+                listUsers();
                 break;
 
             case "3":
-                userSystem.logout();
+                logout();
                 option = "0";
                 break;
         }
@@ -92,8 +93,7 @@ public class Main {
         return option;
     }
 
-    private static void login(Scanner scanner, UserSystem userSystem) {
-
+    public static void login() {
         System.out.println("\nIniciar Sesión Administrador ...");
 
         System.out.print("Email: ");
@@ -105,14 +105,14 @@ public class Main {
         User user = userSystem.login(email, password);
 
         if (user != null) {
+            currentUser = user;
             System.out.println("Login exitoso.");
         } else {
             System.out.println("Credenciales inválidas.");
         }
     }
 
-    private static void registerAdmin(Scanner scanner, UserSystem userSystem) {
-
+    public static void registerAdmin() {
         System.out.println("\nCrear Cuenta Administrador ...");
 
         System.out.print("Nombre: ");
@@ -136,15 +136,16 @@ public class Main {
             return;
         }
 
-        if (userSystem.registerUser(adminName, adminLastName, adminEmail, adminPassword, adminCountry)) {
+        boolean newUser = userSystem.addUser(adminName, adminLastName, adminEmail, adminPassword, adminCountry);
+
+        if (newUser) {
             System.out.println("Usuario registrado.");
         } else {
             System.out.println("Ya existe un usuario registrado con este correo.");
         }
     }
 
-    private static void findUser(Scanner scanner, UserSystem userSystem) {
-
+    public static void findUser() {
         System.out.print("Email: ");
         String searchEmail = scanner.nextLine();
 
@@ -153,31 +154,46 @@ public class Main {
         if (user == null) {
             System.out.println("Usuario no encontrado");
         } else {
-            System.out.println("\n--- INFORMACIÓN DEL USUARIO ---");
-            System.out.println("Nombre: " + user.getName());
-            System.out.println("Apellido: " + user.getLastName());
-            System.out.println("País: " + user.getCountry());
-            System.out.println("Perfil: " + user.getRole());
+            System.out.println("\n+-------------- DATOS DEL USUARIO --------------+");
+            System.out.printf("| %-15s | %-25s |\n", "Campo", "Valor");
+            System.out.println("+------------------+---------------------------+");
+
+            System.out.printf("| %-15s | %-25s |\n", "Nombre", user.getName());
+            System.out.printf("| %-15s | %-25s |\n", "Apellido", user.getLastName());
+            System.out.printf("| %-15s | %-25s |\n", "Email", user.getEmail());
+            System.out.printf("| %-15s | %-25s |\n", "País", user.getCountry());
+            System.out.printf("| %-15s | %-25s |\n", "Perfil", user.getRole());
+
+            System.out.println("+------------------+---------------------------+");
         }
     }
 
-    private static void listUsers(UserSystem userSystem) {
+    public static void listUsers() {
 
-        System.out.println("# - Nombre - Correo - País de nacimiento - Perfil");
-        System.out.println("--------------------------------------");
+        System.out.println("+----+----------------------+--------------------------+----------------+---------+");
+        System.out.printf("| %-2s | %-20s | %-24s | %-14s | %-7s |\n",
+                "#", "Nombre", "Email", "País", "Perfil");
+        System.out.println("+----+----------------------+--------------------------+----------------+---------+");
 
         int i = 1;
 
         for (User u : userSystem.getAllUsers()) {
-            System.out.println(
-                    i + " - " +
-                            u.getName() + " " +
-                            u.getLastName() + " - " +
-                            u.getEmail() + " - " +
-                            u.getCountry() + " - " +
-                            u.getRole()
+
+            System.out.printf("| %-2d | %-20s | %-24s | %-14s | %-7s |\n",
+                    i,
+                    u.getName() + " " + u.getLastName(),
+                    u.getEmail(),
+                    u.getCountry(),
+                    u.getRole()
             );
+
             i++;
         }
+
+        System.out.println("+----+----------------------+--------------------------+----------------+---------+");
+    }
+
+    public static void logout() {
+        currentUser = null;
     }
 }
