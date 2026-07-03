@@ -55,5 +55,9 @@ public abstract class User {
         this.country = country;
     }
 
+    public String getFullName() {
+        return getName() + " " + getLastName();
+    }
+
     public abstract String getRole();
 }
