@@ -1,5 +1,6 @@
 package service;
 
+import exception.UserNotFoundException;
 import model.Admin;
 import model.Tester;
 import model.User;
@@ -47,8 +48,11 @@ public class UserSystem {
         return users.values();
     }
 
-    public User findUserByEmail(String email) {
-        return users.get(email);
+    public User findUserByEmail(String email) throws UserNotFoundException {
+        User user = users.get(email);
+        if (user != null) {
+            return user;
+        } else throw new UserNotFoundException("Usuario no encontrado");
     }
 
     private boolean userExists(String email) {

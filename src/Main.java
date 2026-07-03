@@ -1,3 +1,4 @@
+import exception.UserNotFoundException;
 import model.User;
 import service.UserSystem;
 
@@ -149,11 +150,9 @@ public class Main {
         System.out.print("Email: ");
         String searchEmail = scanner.nextLine();
 
-        User user = userSystem.findUserByEmail(searchEmail);
+        try {
+            User user = userSystem.findUserByEmail(searchEmail);
 
-        if (user == null) {
-            System.out.println("Usuario no encontrado");
-        } else {
             System.out.println("\n+-------------- DATOS DEL USUARIO --------------+");
             System.out.printf("| %-15s | %-25s |\n", "Campo", "Valor");
             System.out.println("+------------------+---------------------------+");
@@ -165,6 +164,9 @@ public class Main {
             System.out.printf("| %-15s | %-25s |\n", "Perfil", user.getRole());
 
             System.out.println("+------------------+---------------------------+");
+
+        } catch (UserNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 
