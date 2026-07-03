@@ -1,6 +1,7 @@
 package service;
 
 import exception.EmailAlreadyExistsException;
+import exception.InvalidCredentialsException;
 import exception.UserNotFoundException;
 import model.Admin;
 import model.Tester;
@@ -17,14 +18,14 @@ public class UserSystem {
         this.users = new HashMap<>();
     }
 
-    public User login(String email, String password) {
+    public User login(String email, String password) throws InvalidCredentialsException {
         User user = users.get(email);
 
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
 
-        return null;
+        throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
     public boolean addUser(String name, String lastName, String email, String password, String country) throws EmailAlreadyExistsException {
@@ -36,9 +37,7 @@ public class UserSystem {
             return false;
         }
 
-        if (users.containsKey(email)) {
-            throw new EmailAlreadyExistsException("Ya existe un usuario registrado con este correo.");
-        }
+        userExists(email);
 
         User user = new Admin(name, lastName, email, password, country);
         users.put(email, user);
@@ -58,7 +57,7 @@ public class UserSystem {
 
     public void userExists(String email) throws EmailAlreadyExistsException {
         if (users.containsKey(email)) {
-            throw new EmailAlreadyExistsException("Ya existe un usuario registrado con este correo.");
+            throw new EmailAlreadyExistsException("Ya existe un usuario registrado con este correo");
         }
     }
 

@@ -1,4 +1,5 @@
 import exception.EmailAlreadyExistsException;
+import exception.InvalidCredentialsException;
 import exception.UserNotFoundException;
 import model.User;
 import service.UserSystem;
@@ -96,21 +97,22 @@ public class Main {
     }
 
     public static void login() {
-        System.out.println("\nIniciar Sesión Administrador ...");
+        try {
+            System.out.println("\nIniciar Sesión Administrador ...");
 
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
+            System.out.print("Email: ");
+            String email = scanner.nextLine();
 
-        System.out.print("Contraseña: ");
-        String password = scanner.nextLine();
+            System.out.print("Contraseña: ");
+            String password = scanner.nextLine();
 
-        User user = userSystem.login(email, password);
+            User user = userSystem.login(email, password);
 
-        if (user != null) {
             currentUser = user;
-            System.out.println("Login exitoso.");
-        } else {
-            System.out.println("Credenciales inválidas.");
+            System.out.println("Login exitoso");
+
+        } catch (InvalidCredentialsException e) {
+            System.out.println(e.getMessage());
         }
     }
 
