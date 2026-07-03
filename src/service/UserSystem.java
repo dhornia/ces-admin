@@ -39,6 +39,10 @@ public class UserSystem {
             throw new InvalidDataException("Todos los campos son obligatorios.");
         }
 
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            throw new InvalidDataException("El formato del correo es inválido.");
+        }
+
         if (password.length() < 8) {
             throw new InvalidDataException("La contraseña debe tener al menos 8 caracteres.");
         }

@@ -146,7 +146,7 @@ public class Main {
             System.out.println("Usuario creado con éxito");
 
         } catch (EmailAlreadyExistsException e) {
-            System.out.println("Email en uso." + e.getMessage());
+            System.out.println("Email en uso. " + e.getMessage());
 
         } catch (InvalidDataException e) {
             System.out.println("Datos inválidos. " + e.getMessage());
