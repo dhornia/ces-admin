@@ -1,7 +1,9 @@
 import exception.EmailAlreadyExistsException;
-import exception.InvalidCredentialsException;
 import exception.InvalidDataException;
+import exception.InvalidMenuOptionException;
+import exception.InvalidCredentialsException;
 import exception.UserNotFoundException;
+
 import model.User;
 import service.UserSystem;
 
@@ -22,52 +24,59 @@ public class Main {
     }
 
     public static void showMenu() {
-        String option = "0";
+        boolean isRunning = true;
 
-        while (!option.equals("4")) {
-
+        while (isRunning ) {
             System.out.println("\n=====================");
             System.out.println("     Admin CES");
             System.out.println("=====================");
 
             if (currentUser == null) {
-                option = showPublicMenu();
+                isRunning = showPublicMenu();
             } else {
-                option = showAdminMenu();
+                showAdminMenu();
             }
         }
     }
 
-    public static String showPublicMenu() {
+    public static boolean showPublicMenu() {
         System.out.println("1 - Iniciar Sesión");
         System.out.println("2 - Registrarse");
         System.out.println("3 - Salir");
 
-        System.out.print("Seleccione una opción: ");
-        String option = scanner.nextLine();
+        String input = read("Seleccione una opción: ");
 
-        switch (option) {
-            case "1":
-                login();
-                break;
+        try {
+            int option = Integer.parseInt(input);
+            if (option < 1 || option > 3) {
+                throw new InvalidMenuOptionException("Opción de menú inexistente");
+            }
 
-            case "2":
-                registerAdmin();
-                break;
+            switch (option) {
+                case 1:
+                    login();
+                    break;
 
-            case "3":
-                System.out.println("\nSaliendo ...");
-                System.out.println("Hasta luego!");
-                break;
+                case 2:
+                    registerAdmin();
+                    break;
 
-            default:
-                System.out.println("Opción no válida");
+                case 3:
+                    System.out.println("\nSaliendo ...");
+                    return false;
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Debe ingresar un número");
+
+        } catch (InvalidMenuOptionException e) {
+            System.out.println(e.getMessage());
         }
 
-        return option;
+        return true;
     }
 
-    public static String showAdminMenu() {
+    public static void showAdminMenu() {
         System.out.println("\n*** Bienvenido " + currentUser.getFullName() + " ***");
         System.out.println("--- MENU ---");
 
@@ -75,25 +84,32 @@ public class Main {
         System.out.println("2 - Ver usuarios");
         System.out.println("3 - Cerrar sesión");
 
-        System.out.print("Seleccione una opción: ");
-        String option = scanner.nextLine();
+        String input = read("Seleccione una opción: ");
 
-        switch (option) {
-            case "1":
-                findUser();
-                break;
+        try {
+            int option = Integer.parseInt(input);
+            if (option < 1 || option > 3) {
+                throw new InvalidMenuOptionException("Opción de menú inexistente");
+            }
+            switch (option) {
+                case 1:
+                    findUser();
+                    break;
 
-            case "2":
-                listUsers();
-                break;
+                case 2:
+                    listUsers();
+                    break;
 
-            case "3":
-                logout();
-                option = "0";
-                break;
+                case 3:
+                    logout();
+                    break;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Debe ingresar un número");
+
+        } catch (InvalidMenuOptionException e) {
+            System.out.println(e.getMessage());
         }
-
-        return option;
     }
 
     public static void login() {
