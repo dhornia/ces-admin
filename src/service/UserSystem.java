@@ -5,8 +5,6 @@ import exception.InvalidCredentialsException;
 import exception.InvalidDataException;
 import exception.UserNotFoundException;
 
-import model.Admin;
-import model.Tester;
 import model.User;
 import service.factory.UserFactory;
 
@@ -32,11 +30,17 @@ public class UserSystem {
     public User login(String email, String password) throws InvalidCredentialsException {
         User user = users.get(email);
 
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
+        if (user == null) {
+            throw new InvalidCredentialsException("Usuario no encontrado");
         }
 
-        throw new InvalidCredentialsException("Credenciales inválidas");
+        if (!user.getRole().equals("Administrador")) {
+            throw new InvalidCredentialsException("No tiene permiso para iniciar sesión");
+        }
+
+        if (user.getPassword().equals(password)) {
+            return user;
+        } else throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
     public void addUser(String name,
