@@ -1,6 +1,7 @@
 package ui;
 
 import exception.InvalidDataException;
+import exception.UserNotFoundException;
 import model.User;
 import service.UserSystem;
 import exception.InvalidCredentialsException;
@@ -48,8 +49,9 @@ public class PublicMenu {
             Session.login(user);
             System.out.println("Login exitoso");
 
-        } catch (InvalidCredentialsException e) {
+        } catch (UserNotFoundException | InvalidCredentialsException e) {
             System.out.println(e.getMessage());
+
         }
     }
 
