@@ -85,13 +85,19 @@ public class UserSystem {
 
     public void seed() {
         users.put("admin@test.com",
-                UserFactory.createAdmin("Fiorella", "Lopez", "admin@test.com", "12345678", "UY"));
+                UserFactory.createAdmin("Fiorella", "Lopez", "admin@test.com", "12345", "Uruguay"));
+
+        users.put("yaniscorrea@gmail.com",
+                UserFactory.createAdmin("Yanis", "Correa", "yaniscorrea@gmail.com", "12345", "Uruguay"));
+
+        users.put("leonardoperez@gmail.com",
+                UserFactory.createAdmin("Leonardo", "Perez", "leonardoperez@gmail.com", "12345", "Uruguay"));
 
         users.put("user1@test.com",
-                UserFactory.createTester("Juan", "Furtado", "user1@test.com", "12345678", "UY", "Tester Junior"));
+                UserFactory.createTester("Juan", "Furtado", "user1@test.com", "12345", "Uruguay", "Tester Junior"));
 
         users.put("user2@test.com",
-                UserFactory.createTester("Viviana", "Caprani", "user2@test.com", "12345678", "CU", "Tester Senior"));
+                UserFactory.createTester("Viviana", "Caprani", "user2@test.com", "12345", "Uruguay", "Tester Senior"));
     }
 
     private void validateUserData(String name,
@@ -113,7 +119,7 @@ public class UserSystem {
             throw new InvalidDataException("El formato del correo es inválido.");
         }
 
-        if (password.length() < 8) {
+        if (password.length() < 5) {
             throw new InvalidDataException("La contraseña debe tener al menos 8 caracteres.");
         }
 
