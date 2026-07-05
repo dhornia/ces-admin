@@ -8,7 +8,7 @@ import ui.PublicMenu;
 public class Main {
 
     public static void main(String[] args) {
-        UserSystem userSystem = new UserSystem();
+        UserSystem userSystem = UserSystem.getInstance();
         userSystem.seed();
 
         while (true) {

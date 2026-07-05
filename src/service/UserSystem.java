@@ -14,10 +14,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserSystem {
+    private static UserSystem instance;
     private Map<String, User> users;
 
-    public UserSystem() {
+    private UserSystem() {
         this.users = new HashMap<>();
+    }
+
+    public static UserSystem getInstance() {
+        if (instance == null) {
+            instance = new UserSystem();
+        }
+        return instance;
     }
 
     public User login(String email, String password) throws InvalidCredentialsException {
