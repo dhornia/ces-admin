@@ -63,7 +63,7 @@ public class PublicMenu {
             String password = InputReader.read("Contraseña: ");
             String country = InputReader.read("País: ");
 
-            userSystem.addUser(name, lastName, email, password, country);
+            userSystem.createAdmin(name, lastName, email, password, country);
             System.out.println("Usuario creado con éxito");
 
         } catch (InvalidDataException e) {
