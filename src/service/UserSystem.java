@@ -27,11 +27,11 @@ public class UserSystem {
         return instance;
     }
 
-    public User login(String email, String password) throws InvalidCredentialsException {
+    public User login(String email, String password) throws InvalidCredentialsException, UserNotFoundException {
         User user = users.get(email);
 
         if (user == null) {
-            throw new InvalidCredentialsException("Usuario no encontrado");
+            throw new UserNotFoundException("Usuario no encontrado");
         }
 
         if (!user.getRole().equals("Administrador")) {
