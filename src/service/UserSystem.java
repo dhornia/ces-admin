@@ -8,6 +8,7 @@ import exception.UserNotFoundException;
 import model.Admin;
 import model.Tester;
 import model.User;
+import service.factory.UserFactory;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,7 +39,12 @@ public class UserSystem {
         throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
-    public void addUser(String name, String lastName, String email, String password, String country) throws EmailAlreadyExistsException, InvalidDataException {
+    public void addUser(String name,
+                        String lastName,
+                        String email,
+                        String password,
+                        String country) throws EmailAlreadyExistsException, InvalidDataException {
+
         if (name == null || name.isBlank()
                 || lastName == null || lastName.isBlank()
                 || email == null || email.isBlank()
@@ -58,7 +64,7 @@ public class UserSystem {
 
         verifyEmailDoesNotExist(email);
 
-        User user = new Admin(name, lastName, email, password, country);
+        User user = UserFactory.createAdmin(name, lastName, email, password, country);
         users.put(email, user);
     }
 
@@ -81,12 +87,12 @@ public class UserSystem {
 
     public void seed() {
         users.put("admin@test.com",
-                new Admin("Fiorella", "Lopez", "admin@test.com", "1234", "UY"));
+                UserFactory.createAdmin("Fiorella", "Lopez", "admin@test.com", "1234", "UY"));
 
         users.put("user1@test.com",
-                new Tester("Juan", "Furtado", "user1@test.com", "1234", "UY", "Tester Junior"));
+                UserFactory.createTester("Juan", "Furtado", "user1@test.com", "1234", "UY", "Tester Junior"));
 
         users.put("user2@test.com",
-                new Tester("Viviana", "Caprani", "user2@test.com", "1234", "CU", "Tester Senior"));
+                UserFactory.createTester("Viviana", "Caprani", "user2@test.com", "1234", "CU", "Tester Senior"));
     }
 }
