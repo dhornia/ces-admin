@@ -8,39 +8,13 @@ import exception.InvalidCredentialsException;
 import exception.EmailAlreadyExistsException;
 import session.Session;
 
-public class PublicMenu {
+public class PublicMenu extends Menu {
 
-    public static boolean show(UserSystem userSystem) {
-        ConsolePrinter.menuHeader();
-        System.out.println("1) Iniciar Sesión");
-        System.out.println("2) Registrarse");
-        System.out.println("3) Salir");
-
-        try {
-            int option = InputReader.readMenuOption(1, 3);
-
-            switch (option) {
-                case 1:
-                    login(userSystem);
-                    break;
-
-                case 2:
-                    register(userSystem);
-                    break;
-
-                case 3:
-                    System.out.println("\nSaliendo ...");
-                    return false;
-            }
-
-        } catch (NumberFormatException e) {
-            ConsolePrinter.error("Debe ingresar un número");
-        }
-
-        return true;
+    public PublicMenu(UserSystem userSystem) {
+        super(userSystem);
     }
 
-    private static void login(UserSystem userSystem) {
+    private void login() {
         try {
             System.out.println("\nIniciar Sesión Administrador ...");
             String email = InputReader.readInput(("Email: "));
@@ -56,7 +30,7 @@ public class PublicMenu {
         }
     }
 
-    private static void register(UserSystem userSystem) {
+    private void register() {
         try {
             String name = InputReader.readInput("Nombre: ");
             String lastName = InputReader.readInput("Apellido: ");
@@ -73,5 +47,36 @@ public class PublicMenu {
         } catch (EmailAlreadyExistsException e) {
             ConsolePrinter.error(e.getMessage());
         }
+    }
+
+    @Override
+    public boolean show() {
+        ConsolePrinter.menuHeader();
+        System.out.println("1) Iniciar Sesión");
+        System.out.println("2) Registrarse");
+        System.out.println("3) Salir");
+
+        try {
+            int option = InputReader.readMenuOption(1, 3);
+
+            switch (option) {
+                case 1:
+                    login();
+                    break;
+
+                case 2:
+                    register();
+                    break;
+
+                case 3:
+                    System.out.println("\nSaliendo ...");
+                    return false;
+            }
+
+        } catch (NumberFormatException e) {
+            ConsolePrinter.error("Debe ingresar un número");
+        }
+
+        return true;
     }
 }

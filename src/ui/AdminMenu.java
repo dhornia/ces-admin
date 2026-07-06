@@ -7,41 +7,13 @@ import model.User;
 import service.UserSystem;
 import session.Session;
 
-public class AdminMenu {
+public class AdminMenu extends Menu {
 
-    public static void show(UserSystem userSystem) {
-        System.out.println("Bienvenido " + Session.getUser().getFullName());
-        ConsolePrinter.menuHeader();
-
-        System.out.println("1) Buscar usuario");
-        System.out.println("2) Listar usuarios");
-        System.out.println("3) Alta usuario Tester");
-        System.out.println("4) Cerrar sesión");
-
-        System.out.println("\nSeleccione una opción:");
-
-        int option = InputReader.readMenuOption(1, 4);
-
-        switch (option) {
-            case 1:
-                findUser(userSystem);
-                break;
-
-            case 2:
-                listUsers(userSystem);
-                break;
-
-            case 3:
-                createTester(userSystem);
-                break;
-
-            case 4:
-                logout();
-                break;
-        }
+    public AdminMenu(UserSystem userSystem) {
+        super(userSystem);
     }
 
-    private static void findUser(UserSystem userSystem) {
+    private void findUser() {
         String email = InputReader.readInput("Email: ");
 
         try {
@@ -53,15 +25,15 @@ public class AdminMenu {
         }
     }
 
-    private static void listUsers(UserSystem userSystem) {
+    private void listUsers() {
         ConsolePrinter.printUsers(userSystem.getAllUsers());
     }
 
-    private static void logout() {
+    private void logout() {
         Session.logout();
     }
 
-    private static void createTester(UserSystem userSystem) {
+    private void createTester() {
         try {
             String name = InputReader.readInput("Nombre: ");
             String lastName = InputReader.readInput("Apellido: ");
@@ -79,5 +51,39 @@ public class AdminMenu {
         } catch (EmailAlreadyExistsException e) {
             ConsolePrinter.error(e.getMessage());
         }
+    }
+
+    @Override
+    public boolean show() {
+        System.out.println("Bienvenido " + Session.getUser().getFullName());
+        ConsolePrinter.menuHeader();
+
+        System.out.println("1) Buscar usuario");
+        System.out.println("2) Listar usuarios");
+        System.out.println("3) Alta usuario Tester");
+        System.out.println("4) Cerrar sesión");
+
+        System.out.println("\nSeleccione una opción:");
+
+        int option = InputReader.readMenuOption(1, 4);
+
+        switch (option) {
+            case 1:
+                findUser();
+                break;
+
+            case 2:
+                listUsers();
+                break;
+
+            case 3:
+                createTester();
+                break;
+
+            case 4:
+                logout();
+                break;
+        }
+        return true;
     }
 }

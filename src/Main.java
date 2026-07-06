@@ -1,28 +1,27 @@
 import service.UserSystem;
 import session.Session;
-import ui.AdminMenu;
-import ui.ConsolePrinter;
-import ui.InputReader;
-import ui.PublicMenu;
+import ui.*;
 
 public class Main {
 
     public static void main(String[] args) {
+
         UserSystem userSystem = UserSystem.getInstance();
         userSystem.seed();
 
-        while (true) {
+        boolean running = true;
+
+        while (running) {
+            Menu menu;
             ConsolePrinter.printHeader();
 
             if (Session.isLogged()) {
-                AdminMenu.show(userSystem);
+                menu = new AdminMenu(userSystem);
             } else {
-                if (!PublicMenu.show(userSystem)) {
-                    break;
-                }
+                menu = new PublicMenu(userSystem);
             }
+            running = menu.show();
         }
-
         InputReader.close();
     }
 }
