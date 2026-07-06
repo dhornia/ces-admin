@@ -6,15 +6,7 @@ import java.util.Collection;
 
 public class ConsolePrinter {
     public static void printHeader() {
-        System.out.println("\n=====================");
-        System.out.println("     Admin CES");
-        System.out.println("=====================");
-    }
-
-    public static void printWelcome(User user) {
-        System.out.println("\n*** Bienvenido "
-                + user.getFullName()
-                + " ***");
+        title("Admin CES");
     }
 
     public static void printUser(User user) {
@@ -53,5 +45,22 @@ public class ConsolePrinter {
         }
 
         System.out.println("+----+----------------------+--------------------------+----------------+---------+");
+    }
+
+    public static void success(String msg) {
+        System.out.println("\n\u001B[32m✔ " + msg + "\u001B[0m");
+    }
+
+    public static void error(String msg) {
+        System.out.println("\n" + "\u001B[31m✖ " + msg + "\u001B[0m");
+    }
+
+    public static void title(String msg) {
+        System.out.println("\n\u001B[34m=== " + msg.toUpperCase() + " ===\u001B[0m\n");    }
+
+    public static void menuHeader() {
+        System.out.println("------------------------");
+        System.out.println("☰ MENÚ");
+        System.out.println("------------------------");
     }
 }

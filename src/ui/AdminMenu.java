@@ -10,14 +10,17 @@ import session.Session;
 public class AdminMenu {
 
     public static void show(UserSystem userSystem) {
-        ConsolePrinter.printWelcome(Session.getUser());
-        System.out.println("--- MENU ---");
-        System.out.println("1 - Buscar usuario");
-        System.out.println("2 - Listar usuarios");
-        System.out.println("3 - Alta usuario Tester");
-        System.out.println("4 - Cerrar sesión");
+        System.out.println("Bienvenido " + Session.getUser().getFullName());
+        ConsolePrinter.menuHeader();
 
-        int option = InputReader.readMenuOption(1, 3);
+        System.out.println("1) Buscar usuario");
+        System.out.println("2) Listar usuarios");
+        System.out.println("3) Alta usuario Tester");
+        System.out.println("4) Cerrar sesión");
+
+        System.out.println("\nSeleccione una opción:");
+
+        int option = InputReader.readMenuOption(1, 4);
 
         switch (option) {
             case 1:
@@ -46,7 +49,7 @@ public class AdminMenu {
             ConsolePrinter.printUser(user);
 
         } catch (UserNotFoundException e) {
-            System.out.println(e.getMessage());
+            ConsolePrinter.error(e.getMessage());
         }
     }
 
@@ -68,13 +71,13 @@ public class AdminMenu {
             String country = InputReader.read("País: ");
 
             userSystem.createTester(name, lastName, email, password, country, level);
-            System.out.println("Usuario creado con éxito");
+            ConsolePrinter.success("Usuario creado con éxito");
 
         } catch (InvalidDataException e) {
-            System.out.println("Datos inválidos: " + e.getMessage());
+            ConsolePrinter.error("Datos inválidos: " + e.getMessage());
 
         } catch (EmailAlreadyExistsException e) {
-            System.out.println(e.getMessage());
+            ConsolePrinter.error(e.getMessage());
         }
     }
 }

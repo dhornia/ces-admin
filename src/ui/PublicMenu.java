@@ -11,9 +11,10 @@ import session.Session;
 public class PublicMenu {
 
     public static boolean show(UserSystem userSystem) {
-        System.out.println("1 - Iniciar Sesión");
-        System.out.println("2 - Registrarse");
-        System.out.println("3 - Salir");
+        ConsolePrinter.menuHeader();
+        System.out.println("1) Iniciar Sesión");
+        System.out.println("2) Registrarse");
+        System.out.println("3) Salir");
 
         try {
             int option = InputReader.readMenuOption(1, 3);
@@ -33,7 +34,7 @@ public class PublicMenu {
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("Debe ingresar un número");
+            ConsolePrinter.error("Debe ingresar un número");
         }
 
         return true;
@@ -47,10 +48,10 @@ public class PublicMenu {
 
             User user = userSystem.login(email, password);
             Session.login(user);
-            System.out.println("Login exitoso");
+            ConsolePrinter.success("Login exitoso");
 
         } catch (UserNotFoundException | InvalidCredentialsException e) {
-            System.out.println(e.getMessage());
+            ConsolePrinter.error(e.getMessage());
 
         }
     }
@@ -64,13 +65,13 @@ public class PublicMenu {
             String country = InputReader.read("País: ");
 
             userSystem.createAdmin(name, lastName, email, password, country);
-            System.out.println("Usuario creado con éxito");
+            ConsolePrinter.success("Usuario creado con éxito");
 
         } catch (InvalidDataException e) {
-            System.out.println("Datos inválidos: " + e.getMessage());
+            ConsolePrinter.error("Datos inválidos: " + e.getMessage());
 
         } catch (EmailAlreadyExistsException e) {
-            System.out.println(e.getMessage());
+            ConsolePrinter.error(e.getMessage());
         }
     }
 }

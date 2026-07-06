@@ -14,19 +14,19 @@ public class InputReader {
 
     public static int readMenuOption(int min, int max) {
         try {
-            int option = Integer.parseInt(read("Seleccione una opción: "));
+            int option = Integer.parseInt(read("\nSeleccione una opción: "));
 
             if (option < min || option > max) {
-                throw new InvalidMenuOptionException("Opción de menú inexistente");
+                throw new InvalidMenuOptionException("Opción inválida");
             }
 
             return option;
 
         } catch (NumberFormatException e) {
-            System.out.println("Opción inválida. Debe ingresar un número");
+            ConsolePrinter.error("Debe ingresar un número");
 
         } catch (InvalidMenuOptionException e) {
-            System.out.println(e.getMessage());
+            ConsolePrinter.error(e.getMessage());
         }
 
         return -1;
