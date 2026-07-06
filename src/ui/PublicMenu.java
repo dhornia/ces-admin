@@ -40,11 +40,11 @@ public class PublicMenu {
         return true;
     }
 
-    public static void login(UserSystem userSystem) {
+    private static void login(UserSystem userSystem) {
         try {
             System.out.println("\nIniciar Sesión Administrador ...");
-            String email = InputReader.read(("Email: "));
-            String password = InputReader.read("Contraseña: ");
+            String email = InputReader.readInput(("Email: "));
+            String password = InputReader.readInput("Contraseña: ");
 
             User user = userSystem.login(email, password);
             Session.login(user);
@@ -58,11 +58,11 @@ public class PublicMenu {
 
     private static void register(UserSystem userSystem) {
         try {
-            String name = InputReader.read("Nombre: ");
-            String lastName = InputReader.read("Apellido: ");
-            String email = InputReader.read("Correo: ");
-            String password = InputReader.read("Contraseña: ");
-            String country = InputReader.read("País: ");
+            String name = InputReader.readInput("Nombre: ");
+            String lastName = InputReader.readInput("Apellido: ");
+            String email = InputReader.readInput("Correo: ");
+            String password = InputReader.readInput("Contraseña: ");
+            String country = InputReader.readInput("País: ");
 
             userSystem.createAdmin(name, lastName, email, password, country);
             ConsolePrinter.success("Usuario creado con éxito");

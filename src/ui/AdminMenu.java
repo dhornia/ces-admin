@@ -42,7 +42,7 @@ public class AdminMenu {
     }
 
     private static void findUser(UserSystem userSystem) {
-        String email = InputReader.read("Email: ");
+        String email = InputReader.readInput("Email: ");
 
         try {
             User user = userSystem.findUserByEmail(email);
@@ -63,12 +63,12 @@ public class AdminMenu {
 
     private static void createTester(UserSystem userSystem) {
         try {
-            String name = InputReader.read("Nombre: ");
-            String lastName = InputReader.read("Apellido: ");
-            String email = InputReader.read("Correo: ");
-            String password = InputReader.read("Contraseña: ");
-            String level = InputReader.read("Nivel(Tester Junior, Tester Senior, Tester Líder): ");
-            String country = InputReader.read("País: ");
+            String name = InputReader.readInput("Nombre: ");
+            String lastName = InputReader.readInput("Apellido: ");
+            String email = InputReader.readInput("Correo: ");
+            String password = InputReader.readInput("Contraseña: ");
+            String level = InputReader.readInput("Nivel(Tester Junior, Tester Senior, Tester Líder): ");
+            String country = InputReader.readInput("País: ");
 
             userSystem.createTester(name, lastName, email, password, country, level);
             ConsolePrinter.success("Usuario creado con éxito");

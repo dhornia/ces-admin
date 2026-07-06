@@ -7,14 +7,14 @@ import java.util.Scanner;
 public class InputReader {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static String read(String message) {
+    public static String readInput(String message) {
         System.out.print(message);
         return scanner.nextLine().trim();
     }
 
     public static int readMenuOption(int min, int max) {
         try {
-            int option = Integer.parseInt(read("\nSeleccione una opción: "));
+            int option = Integer.parseInt(readInput("\nSeleccione una opción: "));
 
             if (option < min || option > max) {
                 throw new InvalidMenuOptionException("Opción inválida");
