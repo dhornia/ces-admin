@@ -56,7 +56,8 @@ public class ConsolePrinter {
     }
 
     public static void title(String msg) {
-        System.out.println("\n\u001B[34m=== " + msg.toUpperCase() + " ===\u001B[0m\n");    }
+        System.out.println("\n\u001B[34m=== " + msg.toUpperCase() + " ===\u001B[0m\n");
+    }
 
     public static void menuHeader() {
         System.out.println("------------------------");

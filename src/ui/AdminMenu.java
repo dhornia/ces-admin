@@ -74,7 +74,7 @@ public class AdminMenu {
             ConsolePrinter.success("Usuario creado con éxito");
 
         } catch (InvalidDataException e) {
-            ConsolePrinter.error("Datos inválidos: " + e.getMessage());
+            ConsolePrinter.error("No se pudo crear el usuario: " + e.getMessage());
 
         } catch (EmailAlreadyExistsException e) {
             ConsolePrinter.error(e.getMessage());

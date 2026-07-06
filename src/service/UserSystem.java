@@ -43,25 +43,16 @@ public class UserSystem {
         } else throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
-    public void createAdmin(String name,
-                        String lastName,
-                        String email,
-                        String password,
-                        String country) throws EmailAlreadyExistsException, InvalidDataException {
+    public void createAdmin(String name, String lastName, String email, String password, String country) throws EmailAlreadyExistsException, InvalidDataException {
 
         validateUserData(name, lastName, email, password, country);
         User user = UserFactory.createAdmin(name, lastName, email, password, country);
         users.put(email, user);
     }
 
-    public void createTester(String name,
-                            String lastName,
-                            String email,
-                            String password,
-                            String country,
-                             String level ) throws EmailAlreadyExistsException, InvalidDataException {
-
+    public void createTester(String name, String lastName, String email, String password, String country, String level) throws EmailAlreadyExistsException, InvalidDataException {
         validateUserData(name, lastName, email, password, country);
+        validateRequiredField(level);
         User user = UserFactory.createTester(name, lastName, email, password, country, level);
         users.put(email, user);
     }
@@ -84,46 +75,38 @@ public class UserSystem {
     }
 
     public void seed() {
-        users.put("admin@test.com",
-                UserFactory.createAdmin("Fiorella", "Lopez", "admin@test.com", "12345", "Uruguay"));
-
-        users.put("yaniscorrea@gmail.com",
-                UserFactory.createAdmin("Yanis", "Correa", "yaniscorrea@gmail.com", "12345", "Uruguay"));
-
-        users.put("leonardoperez@gmail.com",
-                UserFactory.createAdmin("Leonardo", "Perez", "leonardoperez@gmail.com", "12345", "Uruguay"));
-
-        users.put("user1@test.com",
-                UserFactory.createTester("Juan", "Furtado", "user1@test.com", "12345", "Uruguay", "Tester Junior"));
-
-        users.put("user2@test.com",
-                UserFactory.createTester("Viviana", "Caprani", "user2@test.com", "12345", "Uruguay", "Tester Senior"));
+        users.put("admin@test.com", UserFactory.createAdmin("Fiorella", "Lopez", "admin@test.com", "12345", "Uruguay"));
+        users.put("yaniscorrea@gmail.com", UserFactory.createAdmin("Yanis", "Correa", "yaniscorrea@gmail.com", "12345", "Uruguay"));
+        users.put("leonardoperez@gmail.com", UserFactory.createAdmin("Leonardo", "Perez", "leonardoperez@gmail.com", "12345", "Uruguay"));
+        users.put("user1@test.com", UserFactory.createTester("Juan", "Furtado", "user1@test.com", "12345", "Uruguay", "Tester Junior"));
+        users.put("user2@test.com", UserFactory.createTester("Viviana", "Caprani", "user2@test.com", "12345", "Uruguay", "Tester Senior"));
     }
 
-    private void validateUserData(String name,
-                                  String lastName,
-                                  String email,
-                                  String password,
-                                  String country) throws InvalidDataException, EmailAlreadyExistsException {
-
-        if (name == null || name.isBlank()
-                || lastName == null || lastName.isBlank()
-                || email == null || email.isBlank()
-                || password == null || password.isBlank()
-                || country == null || country.isBlank()) {
-
-            throw new InvalidDataException("Todos los campos son obligatorios.");
-        }
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-            throw new InvalidDataException("El formato del correo no es válido.");
-        }
-
-        if (password.length() < 5) {
-            throw new InvalidDataException("La contraseña debe tener al menos 5 caracteres.");
-        }
-
+    private void validateUserData(String name, String lastName, String email, String password, String country) throws InvalidDataException, EmailAlreadyExistsException {
+        validateRequiredField(name);
+        validateRequiredField(lastName);
+        validateRequiredField(password);
+        validateRequiredField(country);
+        validateEmailFormat(email);
+        validatePasswordLength(password);
         verifyEmailDoesNotExist(email);
+    }
 
+    private void validateEmailFormat(String email) throws InvalidDataException {
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            throw new InvalidDataException("El formato del correo no es válido");
+        }
+    }
+
+    private void validatePasswordLength(String password) throws InvalidDataException {
+        if (password.length() < 5) {
+            throw new InvalidDataException("La contraseña debe tener al menos 5 caracteres");
+        }
+    }
+
+    private void validateRequiredField(String value) throws InvalidDataException {
+        if (value == null || value.isBlank()) {
+            throw new InvalidDataException("Todos los campos son obligatorios");
+        }
     }
 }
