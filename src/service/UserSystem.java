@@ -93,6 +93,15 @@ public class UserSystem {
         user.setCountry(country);
     }
 
+    public void deleteTester(String email) throws UserNotFoundException, InvalidDataException {
+        User user = findUserByEmail(email);
+
+        if (user.getRole().equals("Administrador")) {
+            throw new InvalidDataException("Solo se pueden eliminar usuarios Tester");
+        }
+        users.remove(email);
+    }
+
     public void seed() {
         users.put("admin@test.com", UserFactory.createAdmin("Fiorella", "Lopez", "admin@test.com", "12345", "Uruguay"));
         users.put("yaniscorrea@gmail.com", UserFactory.createAdmin("Yanis", "Correa", "yaniscorrea@gmail.com", "12345", "Uruguay"));

@@ -77,6 +77,20 @@ public class AdminMenu extends Menu {
         }
     }
 
+    private void deleteTester() {
+        try {
+            System.out.println("Eliminar usuario tester...");
+            String email = InputReader.readInput("Email: ");
+
+            userSystem.deleteTester(email);
+
+            ConsolePrinter.success("Usuario eliminado correctamente");
+
+        } catch (UserNotFoundException | InvalidDataException e) {
+            ConsolePrinter.error(e.getMessage());
+        }
+    }
+
     @Override
     public boolean show() {
         System.out.println("Bienvenido " + Session.getUser().getFullName());
@@ -87,11 +101,10 @@ public class AdminMenu extends Menu {
         System.out.println("3) Alta usuario Tester");
         System.out.println("4) Reiniciar contraseña");
         System.out.println("5) Mi perfil");
-        System.out.println("6) Cerrar sesión");
+        System.out.println("6) Eliminar usuario tester");
+        System.out.println("7) Cerrar sesión");
 
-        System.out.println("\nSeleccione una opción:");
-
-        int option = InputReader.readMenuOption(1, 6);
+        int option = InputReader.readMenuOption(1, 7);
 
         switch (option) {
             case 1:
@@ -115,6 +128,10 @@ public class AdminMenu extends Menu {
                 break;
 
             case 6:
+                deleteTester();
+                break;
+
+            case 7:
                 logout();
                 break;
         }
