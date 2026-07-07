@@ -14,7 +14,7 @@ public abstract class Menu {
 
     public void resetPassword() {
         try {
-            System.out.println("Reiniciar contraseña");
+            System.out.println("Reiniciar contraseña...");
 
             String email = InputReader.readInput("Email: ");
             String password = InputReader.readInput("Contraseña nueva: ");

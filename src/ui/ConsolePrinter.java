@@ -10,7 +10,6 @@ public class ConsolePrinter {
     }
 
     public static void printUser(User user) {
-        System.out.println("\n+-------------- DATOS DEL USUARIO --------------+");
         System.out.printf("| %-15s | %-25s |\n", "Campo", "Valor");
         System.out.println("+------------------+---------------------------+");
 
