@@ -35,7 +35,7 @@ public class UserSystem {
         }
 
         if (!user.getRole().equals("Administrador")) {
-            throw new InvalidCredentialsException("No tiene permiso para iniciar sesión");
+            throw new InvalidCredentialsException("Perfil de usuario no administrador");
         }
 
         if (user.getPassword().equals(password)) {

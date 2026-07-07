@@ -22,7 +22,7 @@ public class PublicMenu extends Menu {
 
             User user = userSystem.login(email, password);
             Session.login(user);
-            ConsolePrinter.success("Login exitoso");
+            ConsolePrinter.success("Sesión iniciada");
 
         } catch (UserNotFoundException | InvalidCredentialsException e) {
             ConsolePrinter.error(e.getMessage());

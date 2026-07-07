@@ -31,6 +31,7 @@ public class AdminMenu extends Menu {
 
     private void logout() {
         Session.logout();
+        ConsolePrinter.success("Sesión cerrada");
     }
 
     private void createTester() {
