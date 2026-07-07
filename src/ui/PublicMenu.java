@@ -54,10 +54,11 @@ public class PublicMenu extends Menu {
         ConsolePrinter.menuHeader();
         System.out.println("1) Iniciar Sesión");
         System.out.println("2) Registrarse");
-        System.out.println("3) Salir");
+        System.out.println("3) Reiniciar contraseña");
+        System.out.println("4) Salir");
 
         try {
-            int option = InputReader.readMenuOption(1, 3);
+            int option = InputReader.readMenuOption(1, 4);
 
             switch (option) {
                 case 1:
@@ -69,6 +70,10 @@ public class PublicMenu extends Menu {
                     break;
 
                 case 3:
+                    resetPassword();
+                    break;
+
+                case 4:
                     System.out.println("\nSaliendo ...");
                     return false;
             }

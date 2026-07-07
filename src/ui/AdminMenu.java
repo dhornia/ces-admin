@@ -62,11 +62,12 @@ public class AdminMenu extends Menu {
         System.out.println("1) Buscar usuario");
         System.out.println("2) Listar usuarios");
         System.out.println("3) Alta usuario Tester");
-        System.out.println("4) Cerrar sesión");
+        System.out.println("4) Reiniciar contraseña");
+        System.out.println("5) Cerrar sesión");
 
         System.out.println("\nSeleccione una opción:");
 
-        int option = InputReader.readMenuOption(1, 4);
+        int option = InputReader.readMenuOption(1, 5);
 
         switch (option) {
             case 1:
@@ -82,6 +83,10 @@ public class AdminMenu extends Menu {
                 break;
 
             case 4:
+                resetPassword();
+                break;
+
+            case 5:
                 logout();
                 break;
         }

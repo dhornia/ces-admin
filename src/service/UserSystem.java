@@ -74,6 +74,13 @@ public class UserSystem {
         }
     }
 
+    public void resetPassword(User user, String newPassword) throws InvalidDataException {
+        validateRequiredField(newPassword);
+        validatePasswordLength(newPassword);
+
+        user.setPassword(newPassword);
+    }
+
     public void seed() {
         users.put("admin@test.com", UserFactory.createAdmin("Fiorella", "Lopez", "admin@test.com", "12345", "Uruguay"));
         users.put("yaniscorrea@gmail.com", UserFactory.createAdmin("Yanis", "Correa", "yaniscorrea@gmail.com", "12345", "Uruguay"));
