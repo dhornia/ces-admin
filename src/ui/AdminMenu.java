@@ -23,6 +23,9 @@ public class AdminMenu extends Menu {
 
         } catch (UserNotFoundException e) {
             ConsolePrinter.error(e.getMessage());
+
+        } catch (InvalidDataException e) {
+            ConsolePrinter.error(e.getMessage());
         }
     }
 

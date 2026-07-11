@@ -61,8 +61,10 @@ public class UserSystem {
         return users.values();
     }
 
-    public User findUserByEmail(String email) throws UserNotFoundException {
+    public User findUserByEmail(String email) throws UserNotFoundException, InvalidDataException {
+        validateRequiredField(email);
         User user = users.get(email);
+
         if (user != null) {
             return user;
         } else throw new UserNotFoundException("Usuario no encontrado");
