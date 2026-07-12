@@ -24,9 +24,8 @@ public class PublicMenu extends Menu {
             Session.login(user);
             ConsolePrinter.success("Sesión iniciada");
 
-        } catch (UserNotFoundException | InvalidCredentialsException e) {
+        } catch (UserNotFoundException | InvalidCredentialsException | InvalidDataException e) {
             ConsolePrinter.error(e.getMessage());
-
         }
     }
 
