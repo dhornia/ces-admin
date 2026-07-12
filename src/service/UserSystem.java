@@ -93,7 +93,7 @@ public class UserSystem {
 
         user.setName(name);
         user.setLastName(lastName);
-        user.setLastName(email);
+        user.setEmail(email);
         user.setCountry(country);
     }
 
