@@ -31,7 +31,7 @@ public class UserSystem {
         validateRequiredField(email);
         validateRequiredField(password);
 
-        User user = users.get(email);
+        User user = findUserByEmail(email);
         if (user == null) {
             throw new UserNotFoundException("Usuario no encontrado");
         }
@@ -46,7 +46,6 @@ public class UserSystem {
     }
 
     public void createAdmin(String name, String lastName, String email, String password, String country) throws EmailAlreadyExistsException, InvalidDataException {
-
         validateUserData(name, lastName, email, password, country);
         User user = UserFactory.createAdmin(name, lastName, email, password, country);
         users.put(email, user);
@@ -67,9 +66,10 @@ public class UserSystem {
         validateRequiredField(email);
         User user = users.get(email);
 
-        if (user != null) {
-            return user;
-        } else throw new UserNotFoundException("Usuario no encontrado");
+        if (user == null) {
+            throw new UserNotFoundException("Usuario no encontrado");
+        }
+        return user;
     }
 
     public void verifyEmailDoesNotExist(String email) throws EmailAlreadyExistsException {
@@ -79,9 +79,7 @@ public class UserSystem {
     }
 
     public void resetPassword(User user, String newPassword) throws InvalidDataException {
-        validateRequiredField(newPassword);
         validatePasswordLength(newPassword);
-
         user.setPassword(newPassword);
     }
 
@@ -100,7 +98,7 @@ public class UserSystem {
     public void deleteTester(String email) throws UserNotFoundException, InvalidDataException {
         User user = findUserByEmail(email);
 
-        if (user.getRole().equals("Administrador")) {
+        if (!"Administrador".equals(user.getRole())) {
             throw new InvalidDataException("Solo se pueden eliminar usuarios Tester");
         }
         users.remove(email);
@@ -131,6 +129,7 @@ public class UserSystem {
     }
 
     private void validatePasswordLength(String password) throws InvalidDataException {
+        validateRequiredField(password);
         if (password.length() < 5) {
             throw new InvalidDataException("La contraseña debe tener al menos 5 caracteres");
         }
