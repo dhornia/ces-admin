@@ -98,7 +98,7 @@ public class UserSystem {
     public void deleteTester(String email) throws UserNotFoundException, InvalidDataException {
         User user = findUserByEmail(email);
 
-        if (!"Administrador".equals(user.getRole())) {
+        if ("Administrador".equals(user.getRole())) {
             throw new InvalidDataException("Solo se pueden eliminar usuarios Tester");
         }
         users.remove(email);
